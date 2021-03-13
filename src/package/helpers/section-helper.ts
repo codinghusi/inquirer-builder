@@ -22,11 +22,13 @@ export class SectionHelper extends Helper {
 
         const tmpLocal = context.local;
         context.local = {};
-
-        context.insert(this.body);
-        removeUncaptured(context.local); // FIXME: currently not working cause this will be executed later
         context.global[this.name] = context.local;
+        
+        context.insert(this.body).then(() => {
+            removeUncaptured(context.local);
+            context.local = tmpLocal;
+        });
+        
 
-        context.local = tmpLocal;
     }
 }

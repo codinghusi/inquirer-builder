@@ -15,20 +15,48 @@ import { CustomMessage, MessageHelper } from "./helpers/message-helper";
 import { SectionHelper } from "./helpers/section-helper";
 import { Questions, SerializedQuestion, SerializedQuestions } from "./questions";
 
+class Watcher {
+    public promise: Promise<void>;
+    private done: () => void;
+
+    constructor(public amount: number) {
+        const self = this;
+        this.promise = new Promise(resolve => self.done = resolve);
+    }
+
+    addAmount(amount: number) {
+        this.amount += amount;
+        if (this.finished()) {
+            console.log("finished");
+            this.done();
+        }
+    }
+
+    finished() {
+        return this.amount <= 0;
+    }
+}
 
 export class Context {
     constructor(public local: Answers,
                 public global: Answers,
-                public queue: SerializedQuestions) { }
+                public queue: SerializedQuestions,
+                private watchers: Watcher[] = []) { }
     
     nextQuestion() {
-        return this.queue.splice(0, 1)[0];
+        this.watchers.forEach(watcher => watcher.addAmount(-1));
+        this.watchers = this.watchers.filter(watcher => watcher.finished());
+        console.log(this.watchers.map(watch => watch.amount));
+        return this.queue.splice(0, 1)?.[0];
     }
 
     insert(questions: Questions) {
         const serialized = Questions.serialize(questions);
         this.queue.splice(0, 0, ...serialized);
-        return this;
+        this.watchers.forEach(watcher => watcher.addAmount(serialized.length));
+        const watcher = new Watcher(serialized.length);
+        this.watchers.push(watcher);
+        return watcher.promise;
     }
 }
 
@@ -69,6 +97,7 @@ export async function prompterExtended(context: Context) {
     // removing uncaptured questions (detected by underscore as prefix in name)
     removeUncaptured(context.local);
     removeUncaptured(context.global);
+    context.nextQuestion(); // trigger last watcher // FIXME: very bad
 
     return context.global;
 }
