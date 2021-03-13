@@ -1,4 +1,5 @@
 import { entry, section, password, prompter, select, text, message } from "../src/prompter";
+// import { entry } from "inquirer-builder";
 
 // Small helper function
 function email(message: string) {
@@ -32,4 +33,3 @@ const menu = {
 prompter(menu).then(answers => {
     console.log(answers);
 });
-
