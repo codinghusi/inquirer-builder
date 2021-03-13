@@ -1,8 +1,8 @@
 {
   "name": "inquirer-builder",
   "version": "1.0.0",
-  "description": "",
-  "main": "packages/index.js",
+  "description": "Builds on top of inquirerjs for very easy use",
+  "main": "packages/src/index.js",
   "types": "index.d.ts",
   "scripts": {
     "build": "tsc"
@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "^8.0.0"    
+    "inquirer": "^8.0.0"
   },
   "devDependencies": {
     "@types/inquirer": "^7.3.1",
