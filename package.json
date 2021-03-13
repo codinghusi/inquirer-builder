@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Builds on top of inquirerjs for very easy use",
   "main": "packages/src/index.js",
-  "types": "packages/index.d.ts",
+  "types": "packages/src/index.d.ts",
   "scripts": {
     "build": "tsc"
   },
