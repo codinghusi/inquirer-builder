@@ -1,5 +1,5 @@
 import inquirer, { Answers } from "inquirer";
-import { Answer, Message, PromptType, QuestionBuilder } from "./builder";
+import { Message, PromptType, QuestionBuilder } from "./builder";
 import { ChoiceEntryBuilder } from "./choice-entry";
 import { Context } from "./prompter";
 import { KeyValue } from "./utils";
