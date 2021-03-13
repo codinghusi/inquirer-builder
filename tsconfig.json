@@ -1,16 +1,17 @@
 {
     "compilerOptions": {
-      "target": "es6",
+      "target": "esnext",
       "module": "commonjs",
       "esModuleInterop": true,
       "moduleResolution": "node",
       "sourceMap": true,
-      "outDir": "packages",
-      "declaration": true
+      "declaration": true,
+      "outDir": "package",
+      "rootDir": "src",
     },
     "exclude": [
       "node_modules",
-      "packages"
+      "package"
     ],
     "lib": ["es2015"],
   }

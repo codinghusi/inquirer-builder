@@ -1,14 +1,14 @@
 {
   "name": "inquirer-builder",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Builds on top of inquirerjs for very easy use",
-  "main": "packages/src/index.js",
-  "types": "packages/src/index.d.ts",
+  "main": "package/index.js",
+  "types": "package/index.d.ts",
   "scripts": {
     "build": "tsc"
   },
   "keywords": [],
-  "author": "",
+  "author": "Gerrit Weiermann",
   "license": "ISC",
   "dependencies": {
     "inquirer": "^8.0.0"
