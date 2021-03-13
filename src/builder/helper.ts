@@ -1,12 +1,19 @@
 import { Answers } from "./builder";
-import { Context, prompterExtended as prompterExtended, Questions, removeUncaptured } from "./prompter";
+import { Context, prompter, prompterExtended as prompterExtended, Questions, removeUncaptured, text } from "./prompter";
+
+export abstract class Helper {
+    abstract run(context: Context): Promise<void>;
+    abstract build(): any;
+}
 
 // TODO: add askAnswered
-export class GlobalHelper {
+export class GlobalHelper extends Helper {
     _askAnswered = false;
 
     constructor(public name: string,
-                public body: Questions) { }
+                public body: Questions) {
+        super();
+    }
 
     askAnswered(askAnswered: boolean) {
         this._askAnswered = askAnswered;
@@ -30,5 +37,23 @@ export class GlobalHelper {
 
     build() {
         return this.body;
+    }
+}
+
+export type Message = string | ((answers: Answers, globalAnswers: Answers) => string);
+
+export class MessageHelper implements Helper {
+    constructor(public message: Message) { }
+
+    async run(context: Context) {
+        let message = this.message;
+        if (typeof(message) === "function") {
+            message = message(context.local, context.global);
+        }
+        await prompter([ text(message).prefix("").filter(() => "") ]);
+    }
+
+    build() {
+        return null;
     }
 }

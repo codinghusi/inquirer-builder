@@ -2,6 +2,7 @@ import { entry, select, yesno, section, prompter } from "../builder/prompter";
 
 const typescript = section("typescript", {
 	"target": select("Target", ["ES4", "ES5", "ES6"])
+	// ...
 });
 
 const angular = section("angular", {

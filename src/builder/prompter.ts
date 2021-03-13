@@ -4,12 +4,12 @@ import { ConfirmBuilder } from "./builders";
 import { ChoiceEntryBuilder } from "./choice-entry";
 import { Choices, ChoicesBuilder } from "./choices-builder";
 import { CheckboxBuilder, ListBuilder, RawListBuilder } from "./choices-builders";
-import { GlobalHelper as SectionHelper } from "./helper";
+import { GlobalHelper as SectionHelper, Helper, Message, MessageHelper } from "./helper";
 import { EditorBuilder, NumberBuilder, PasswordBuilder, TextBuilder } from "./input-builders";
 import { KeyValue } from "./utils";
 
-export type Question = QuestionBuilder | inquirer.Question;
-export type Questions = SectionHelper | Question[] | KeyValue<Question> | (() => Questions);
+export type Question = QuestionBuilder | inquirer.Question | Helper;
+export type Questions = Helper | Question[] | KeyValue<Question> | (() => Questions);
 
 export interface Context {
     local: Answers,
@@ -61,7 +61,7 @@ export async function prompterExtended(questions: Questions, context: Context) {
         const builder = unifiedQuestions[i++];
 
         // If required put result into the global context
-        if (builder instanceof SectionHelper) {
+        if (builder instanceof Helper) {
             await builder.run(context);
             continue;
         }
@@ -141,4 +141,8 @@ export function entry(displayName: string) {
 
 export function section(name: string, body: Questions) {
     return new SectionHelper(name, body);
+}
+
+export function message(message: Message) {
+    return new MessageHelper(message);
 }

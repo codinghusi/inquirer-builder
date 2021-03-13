@@ -1,3 +1,13 @@
+# Inquirier Builder
+
+This package builds on top of Inquirer.js and provides you more flexibility and functionality.
+On top of that it's more intuitive to use.
+
+## Examples
+Check out the examples/ for examples
+
+Example "Login or Register":
+```
 import { entry, section, password, prompter, select, text, message } from "../builder/prompter";
 
 // Small helper function
@@ -33,3 +43,4 @@ prompter(menu).then(answers => {
     console.log(answers);
 });
 
+```
