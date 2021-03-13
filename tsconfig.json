@@ -5,12 +5,12 @@
       "esModuleInterop": true,
       "moduleResolution": "node",
       "sourceMap": true,
-      "outDir": "packages"
+      "outDir": "packages",
+      "declaration": true
     },
     "exclude": [
       "node_modules",
-      "dist"
+      "packages"
     ],
     "lib": ["es2015"],
-    "declaration": true
   }
