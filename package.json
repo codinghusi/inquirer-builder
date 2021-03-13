@@ -1,0 +1,21 @@
+{
+  "name": "inquirer-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node ./src/examples/login-or-register"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^8.0.0",
+    "typescript": "^4.2.3"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^7.3.1",
+    "ts-loader": "^8.0.18",
+    "ts-node": "^9.1.1"
+  }
+}
