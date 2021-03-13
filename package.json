@@ -5,7 +5,8 @@
   "main": "package/index.js",
   "types": "package/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "fix-imports": "tslint --config tslint-unused-imports.json --fix --project ."
   },
   "keywords": [],
   "author": "Gerrit Weiermann",

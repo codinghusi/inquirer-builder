@@ -1,4 +1,4 @@
-import { Context, prompter, prompterExtended as prompterExtended, Questions, removeUncaptured, text } from "../prompter";
+import { Context } from "../questions";
 
 export abstract class Helper {
     abstract run(context: Context): Promise<void>;

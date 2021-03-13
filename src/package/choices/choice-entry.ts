@@ -1,5 +1,6 @@
-import inquirer, { Answers, QuestionCollection } from "inquirer";
-import { Context, prompter, prompterExtended, Questions } from "../prompter";
+import inquirer from "inquirer";
+import { prompterExtended } from "../prompter";
+import { Context, Questions } from "../questions";
 
 type SelectEvent = (choice: ChoiceEntryBuilder) => Promise<Questions> | Questions;
 

@@ -1,5 +1,7 @@
 import { Answers } from "inquirer";
-import { Helper, Context, prompter, text } from "..";
+import { prompter, text } from "../prompter";
+import { Context } from "../questions";
+import { Helper } from "./helper";
 
 export type CustomMessage = string | ((answers: Answers, globalAnswers: Answers) => string);
 

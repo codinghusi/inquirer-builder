@@ -1,4 +1,6 @@
-import { Helper, Questions, Context, prompterExtended, removeUncaptured } from "..";
+import { prompterExtended, removeUncaptured } from "..";
+import { Context, Questions } from "../questions";
+import { Helper } from "./helper";
 
 export class SectionHelper extends Helper {
     _askAnswered = false;

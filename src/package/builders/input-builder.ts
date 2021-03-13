@@ -1,4 +1,5 @@
-import { Answer, QuestionBuilder } from "./builder";
+import { Answer } from "../types";
+import { QuestionBuilder } from "./builder";
 
 
 export abstract class InputBuilder extends QuestionBuilder {

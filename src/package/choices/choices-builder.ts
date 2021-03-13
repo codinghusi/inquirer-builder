@@ -1,6 +1,6 @@
 import { Answers } from "inquirer";
-import { Context } from "..";
-import { QuestionBuilder } from "../builder";
+import { QuestionBuilder } from "../builders/builder";
+import { Context } from "../questions";
 import { PromptType, Message } from "../types";
 import { Choice } from "./choice";
 import { ChoiceEntryBuilder } from "./choice-entry";

@@ -1,4 +1,4 @@
-import { Context, Questions } from ".";
+import { Context, Questions } from "./questions";
 
 export interface KeyValue<Value> {
     [key: string]: Value;

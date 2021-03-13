@@ -11,7 +11,8 @@
     },
     "exclude": [
       "node_modules",
-      "package"
+      "package",
+      "example"
     ],
     "lib": ["es2015"],
   }

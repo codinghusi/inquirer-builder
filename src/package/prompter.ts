@@ -1,45 +1,21 @@
-import inquirer from "inquirer";
-import { Answers, QuestionBuilder } from "./builder";
-import { ConfirmBuilder } from "./package/builders/confirm-builder";
-import { ChoiceEntryBuilder } from "./choices/choice-entry";
-import { Choices } from "./choices-builder";
-import { CheckboxBuilder, ListBuilder, RawListBuilder } from "./choices-builders";
-import { GlobalHelper as SectionHelper, Helper, CustomMessage, MessageHelper } from "./helpers/helper";
-import { EditorBuilder, NumberBuilder, PasswordBuilder, TextBuilder } from "./input-builders";
-import { KeyValue } from "./utils";
+import inquirer, { Answers } from "inquirer";
+import { ChoiceEntryBuilder } from ".";
+import { QuestionBuilder } from "./builders/builder";
+import { CheckboxBuilder } from "./builders/checkbox-builder";
+import { ConfirmBuilder } from "./builders/confirm-builder";
+import { EditorBuilder } from "./builders/editor-builder";
+import { ListBuilder } from "./builders/list-builder";
+import { NumberBuilder } from "./builders/number-builder";
+import { PasswordBuilder } from "./builders/password-builder";
+import { RawListBuilder } from "./builders/rawlist-builder";
+import { TextBuilder } from "./builders/text-builder";
+import { Choices } from "./choices/choices";
+import { Helper } from "./helpers/helper";
+import { CustomMessage, MessageHelper } from "./helpers/message-helper";
+import { SectionHelper } from "./helpers/section-helper";
+import { Questions, Context } from "./questions";
 
-export type Question = QuestionBuilder | inquirer.Question | Helper;
-export type Questions = Helper | Question[] | KeyValue<Question> | (() => Questions);
 
-export interface Context {
-    local: Answers,
-    global: Answers
-}
-
-const Questions = {
-    uniform(questions: Questions) {
-        if (Array.isArray(questions)) {
-            return questions;
-        }
-
-        if (typeof(questions) !== "object") {
-            return [];
-        }
-
-        if (questions instanceof SectionHelper) {
-            return [questions];
-        }
-        
-        return Object.entries(questions).map(([name, question]) => {
-            if (question instanceof QuestionBuilder) {
-                question.name(name);
-            } else {
-                question.name = name;
-            }
-            return question;
-        });
-    }
-}
 
 export async function prompter(questions: Questions, answers: Answers = {}) {
     return (await prompterExtended(questions, {
