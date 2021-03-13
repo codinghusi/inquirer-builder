@@ -1,10 +1,10 @@
 import inquirer from "inquirer";
 import { Answers, QuestionBuilder } from "./builder";
-import { ConfirmBuilder } from "./builders";
-import { ChoiceEntryBuilder } from "./choice-entry";
+import { ConfirmBuilder } from "./package/builders/confirm-builder";
+import { ChoiceEntryBuilder } from "./choices/choice-entry";
 import { Choices } from "./choices-builder";
 import { CheckboxBuilder, ListBuilder, RawListBuilder } from "./choices-builders";
-import { GlobalHelper as SectionHelper, Helper, CustomMessage, MessageHelper } from "./helpers";
+import { GlobalHelper as SectionHelper, Helper, CustomMessage, MessageHelper } from "./helpers/helper";
 import { EditorBuilder, NumberBuilder, PasswordBuilder, TextBuilder } from "./input-builders";
 import { KeyValue } from "./utils";
 

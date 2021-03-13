@@ -1,5 +1,5 @@
 import inquirer, { Answers, QuestionCollection } from "inquirer";
-import { Context, prompter, prompterExtended, Questions } from "./prompter";
+import { Context, prompter, prompterExtended, Questions } from "../prompter";
 
 type SelectEvent = (choice: ChoiceEntryBuilder) => Promise<Questions> | Questions;
 

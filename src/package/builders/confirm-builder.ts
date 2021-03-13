@@ -1,5 +1,6 @@
-import { Answer, CallbackExtended, QuestionBuilder } from "./builder";
-import { Context } from "./prompter";
+import { QuestionBuilder } from "../builder";
+import { Context } from "../../prompter";
+import { CallbackExtended, Answer } from "../../types";
 
 
 
