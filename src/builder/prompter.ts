@@ -4,12 +4,12 @@ import { ConfirmBuilder } from "./builders";
 import { ChoiceEntryBuilder } from "./choice-entry";
 import { Choices, ChoicesBuilder } from "./choices-builder";
 import { CheckboxBuilder, ListBuilder, RawListBuilder } from "./choices-builders";
-import { GlobalHelper as NestedHelper } from "./helper";
+import { GlobalHelper as SectionHelper } from "./helper";
 import { EditorBuilder, NumberBuilder, PasswordBuilder, TextBuilder } from "./input-builders";
 import { KeyValue } from "./utils";
 
 export type Question = QuestionBuilder | inquirer.Question;
-export type Questions = NestedHelper | Question[] | KeyValue<Question> | (() => Questions);
+export type Questions = SectionHelper | Question[] | KeyValue<Question> | (() => Questions);
 
 export interface Context {
     local: Answers,
@@ -26,7 +26,7 @@ const Questions = {
             return [];
         }
 
-        if (questions instanceof NestedHelper) {
+        if (questions instanceof SectionHelper) {
             return [questions];
         }
         
@@ -61,7 +61,7 @@ export async function prompterExtended(questions: Questions, context: Context) {
         const builder = unifiedQuestions[i++];
 
         // If required put result into the global context
-        if (builder instanceof NestedHelper) {
+        if (builder instanceof SectionHelper) {
             await builder.run(context);
             continue;
         }
@@ -93,7 +93,7 @@ export function buildPrompt(questions: Questions, answers: Answers = {}) {
         if (question instanceof QuestionBuilder) {
             return question.build(answers);
         }
-        if (question instanceof NestedHelper) {
+        if (question instanceof SectionHelper) {
             return question.build();
         }
         return question;
@@ -139,6 +139,6 @@ export function entry(displayName: string) {
     return new ChoiceEntryBuilder(displayName);
 }
 
-export function nested(name: string, body: Questions) {
-    return new NestedHelper(name, body);
+export function section(name: string, body: Questions) {
+    return new SectionHelper(name, body);
 }

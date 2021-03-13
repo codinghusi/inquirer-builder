@@ -1,4 +1,4 @@
-import { entry, nested, password, prompter, select, text, yesno } from "../builder/prompter";
+import { entry, section, password, prompter, select, text, yesno } from "../builder/prompter";
 
 // Small helper function
 function email(message: string) {
@@ -7,13 +7,13 @@ function email(message: string) {
 }
 
 // Login Questions
-const login = nested("user", {
+const login = section("user", {
     username: text("Username"),
     password: password("Password"),
 });
 
 // Register Questions
-const register = nested("user", {
+const register = section("user", {
     username: text("Username"),
     displayName: text("Displayname"),
     email: email("Email"),
@@ -24,7 +24,7 @@ const register = nested("user", {
 const menu = {
     'auth-type': select("Do you have an account?", {
         login: entry("Login").then(login),
-        register: entry("Register").then(register)
+        register: entry("Register").then(register),
     }),
 };
 
