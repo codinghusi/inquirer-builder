@@ -2,7 +2,8 @@
   "name": "inquirer-builder",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "packages/index.js",
+  "types": "index.d.ts",
   "scripts": {
     "start": "ts-node ./src/examples/login-or-register"
   },

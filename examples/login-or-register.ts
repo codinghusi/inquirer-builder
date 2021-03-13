@@ -1,4 +1,4 @@
-import { entry, section, password, prompter, select, text, message } from "../builder/prompter";
+import { entry, section, password, prompter, select, text, message } from "../src/prompter";
 
 // Small helper function
 function email(message: string) {

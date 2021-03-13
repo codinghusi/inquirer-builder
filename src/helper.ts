@@ -40,10 +40,10 @@ export class GlobalHelper extends Helper {
     }
 }
 
-export type Message = string | ((answers: Answers, globalAnswers: Answers) => string);
+export type CustomMessage = string | ((answers: Answers, globalAnswers: Answers) => string);
 
 export class MessageHelper implements Helper {
-    constructor(public message: Message) { }
+    constructor(public message: CustomMessage) { }
 
     async run(context: Context) {
         let message = this.message;

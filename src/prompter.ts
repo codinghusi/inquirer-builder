@@ -4,7 +4,7 @@ import { ConfirmBuilder } from "./builders";
 import { ChoiceEntryBuilder } from "./choice-entry";
 import { Choices, ChoicesBuilder } from "./choices-builder";
 import { CheckboxBuilder, ListBuilder, RawListBuilder } from "./choices-builders";
-import { GlobalHelper as SectionHelper, Helper, Message, MessageHelper } from "./helper";
+import { GlobalHelper as SectionHelper, Helper, CustomMessage, MessageHelper } from "./helper";
 import { EditorBuilder, NumberBuilder, PasswordBuilder, TextBuilder } from "./input-builders";
 import { KeyValue } from "./utils";
 
@@ -143,6 +143,6 @@ export function section(name: string, body: Questions) {
     return new SectionHelper(name, body);
 }
 
-export function message(message: Message) {
+export function message(message: CustomMessage) {
     return new MessageHelper(message);
 }

@@ -1,4 +1,4 @@
-import { entry, select, yesno, section, prompter } from "../builder/prompter";
+import { entry, select, yesno, section, prompter } from "../src/prompter";
 
 const typescript = section("typescript", {
 	"target": select("Target", ["ES4", "ES5", "ES6"])
