@@ -5,7 +5,7 @@
   "main": "packages/index.js",
   "types": "index.d.ts",
   "scripts": {
-    "start": "ts-node ./src/examples/login-or-register"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
