@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
-import { prompterExtended } from "../prompter";
-import { Context, Questions } from "../questions";
+import { Context, prompterExtended } from "../prompter";
+import { Questions } from "../questions";
 
 type SelectEvent = (choice: ChoiceEntryBuilder) => Promise<Questions> | Questions;
 
@@ -55,7 +55,7 @@ export class ChoiceEntryBuilder {
     async runNested(context: Context) {
         const questions = await this._onSelect?.(this);
         if (questions) {
-            await prompterExtended(questions, context);
+            context.insert(questions);
         }
     }
 

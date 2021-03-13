@@ -2,8 +2,8 @@
   "name": "inquirer-builder",
   "version": "0.0.1",
   "description": "Builds on top of inquirerjs for very easy use",
-  "main": "package/index.js",
-  "types": "package/index.d.ts",
+  "main": "dist/package/index.js",
+  "types": "dist/package/index.d.ts",
   "scripts": {
     "build": "tsc",
     "fix-imports": "tslint --config tslint-unused-imports.json --fix --project ."

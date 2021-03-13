@@ -1,5 +1,5 @@
-import { prompterExtended, removeUncaptured } from "..";
-import { Context, Questions } from "../questions";
+import { Context, removeUncaptured } from "../prompter";
+import { Questions } from "../questions";
 import { Helper } from "./helper";
 
 export class SectionHelper extends Helper {
@@ -23,14 +23,10 @@ export class SectionHelper extends Helper {
         const tmpLocal = context.local;
         context.local = {};
 
-        await prompterExtended(this.body, context);
-        removeUncaptured(context.local);
+        context.insert(this.body);
+        removeUncaptured(context.local); // FIXME: currently not working cause this will be executed later
         context.global[this.name] = context.local;
 
         context.local = tmpLocal;
-    }
-
-    build() {
-        return this.body;
     }
 }

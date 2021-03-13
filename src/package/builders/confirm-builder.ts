@@ -1,6 +1,7 @@
 import { QuestionBuilder } from "./builder";
-import { Context } from "../questions";
+import { Questions } from "../questions";
 import { Answer, CallbackExtended } from "../types";
+import { Context, prompterExtended } from "../prompter";
 
 
 
@@ -15,11 +16,13 @@ export class ConfirmBuilder extends QuestionBuilder {
     async handleAnswer(answer: Answer, context: Context) {
         await super.handleAnswer(answer, context);
 
+        let questions: Questions;
         if (answer) {
-            await this.runQuestions(this._then, answer, context);
+            questions = await Questions.serializeCallback(this._then, answer, context);
         } else {
-            await this.runQuestions(this._else, answer, context);
+            questions = await Questions.serializeCallback(this._else, answer, context);
         }
+        context.insert(questions);
     }
 
     then(then: CallbackExtended) {

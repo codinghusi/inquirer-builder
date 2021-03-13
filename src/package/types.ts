@@ -1,4 +1,5 @@
-import { Context, Questions } from "./questions";
+import { Context } from "./prompter";
+import { Questions } from "./questions";
 
 export interface KeyValue<Value> {
     [key: string]: Value;

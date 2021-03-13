@@ -13,15 +13,28 @@ import { Choices } from "./choices/choices";
 import { Helper } from "./helpers/helper";
 import { CustomMessage, MessageHelper } from "./helpers/message-helper";
 import { SectionHelper } from "./helpers/section-helper";
-import { Questions, Context } from "./questions";
+import { Questions, SerializedQuestion, SerializedQuestions } from "./questions";
 
+
+export class Context {
+    constructor(public local: Answers,
+                public global: Answers,
+                public queue: SerializedQuestions) { }
+    
+    nextQuestion() {
+        return this.queue.splice(0, 1)[0];
+    }
+
+    insert(questions: Questions) {
+        const serialized = Questions.serialize(questions);
+        this.queue.splice(0, 0, ...serialized);
+        return this;
+    }
+}
 
 
 export async function prompter(questions: Questions, answers: Answers = {}) {
-    return (await prompterExtended(questions, {
-        local: answers,
-        global: answers
-    }));
+    return (await prompterExtended(new Context(answers, answers, Questions.serialize(questions))));
 }
 
 export function removeUncaptured(answers: Answers) {
@@ -29,12 +42,9 @@ export function removeUncaptured(answers: Answers) {
                         .forEach(name => delete answers[name]);
 }
 
-export async function prompterExtended(questions: Questions, context: Context) {
-    const unifiedQuestions = Questions.uniform(questions);
-    const builded = buildPrompt(questions, context.global);
-    let i = 0;
-    for (const question of builded) {
-        const builder = unifiedQuestions[i++];
+export async function prompterExtended(context: Context) {
+    while (context.queue.length) {
+        const builder = context.nextQuestion();
 
         // If required put result into the global context
         if (builder instanceof Helper) {
@@ -43,8 +53,9 @@ export async function prompterExtended(questions: Questions, context: Context) {
         }
 
         // Prompt and put the result into the current context
+        const question = builder.build(context.local);
         const result = await inquirer.prompt([question], context.local);
-        const answer = result[question.name];
+        const answer = result[builder._name];
 
         Object.assign(context.local, result);
         
@@ -63,16 +74,9 @@ export async function prompterExtended(questions: Questions, context: Context) {
 }
 
 // FIXME: actually not building GlobalHelper (would be breaking the code)
-export function buildPrompt(questions: Questions, answers: Answers = {}) {
-    const uniformed = Questions.uniform(questions);
-    const builded = uniformed.map(question => {
-        if (question instanceof QuestionBuilder) {
-            return question.build(answers);
-        }
-        if (question instanceof SectionHelper) {
-            return question.build();
-        }
-        return question;
+export function buildPrompt(questions: SerializedQuestion[], answers: Answers = {}) {
+    const builded = questions.map(question => {
+        
     });
     return builded;
 }

@@ -1,11 +1,11 @@
 import inquirer from "inquirer";
 import { ChoiceEntryBuilder } from "./choice-entry";
 
-export type Choice = string | ChoiceEntryBuilder | inquirer.ChoiceOptions;
-export type UniformedChoices = Choice[];
+export type Choice = SerializedChoice | string | inquirer.ChoiceOptions;
+export type SerializedChoice = ChoiceEntryBuilder;
 
 export const Choice = {
-    uniform(choice: Choice) {
+    serialize(choice: Choice) {
         if (typeof(choice) === "string") {
             return new ChoiceEntryBuilder(choice);
         }

@@ -1,6 +1,6 @@
 import { Answers } from "inquirer";
 import { QuestionBuilder } from "../builders/builder";
-import { Context } from "../questions";
+import { Context } from "../prompter";
 import { PromptType, Message } from "../types";
 import { Choice } from "./choice";
 import { ChoiceEntryBuilder } from "./choice-entry";
@@ -20,7 +20,7 @@ export abstract class ChoicesBuilder extends QuestionBuilder {
         super.handleAnswer(answer, context);
         
         // Get a ChoiceEntryBuilder Array only
-        const choices = Choices.uniform(this._choices, context.local);
+        const choices = Choices.serialize(this._choices, context.local);
 
         // Compability for Checkboxes and Lists
         if (!Array.isArray(answer)) {
@@ -60,6 +60,7 @@ export abstract class ChoicesBuilder extends QuestionBuilder {
     }
 
     build(answers: Answers) {
+        console.log("choices", Choices.build(this._choices, answers));
         return { 
             ...super.build(answers),
             choices: Choices.build(this._choices, answers),
