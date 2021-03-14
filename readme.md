@@ -3,44 +3,29 @@
 This package builds on top of Inquirer.js and provides you more flexibility and functionality.
 On top of that it's more intuitive to use.
 
+## Installation
+```sh
+npm install @gweiermann/inquirer-builder
+```
+Types are already in that package (for Typescript)
+
 ## Examples
 Check out the src/examples/ for examples
 
 Example "Login or Register":
-```
-import { entry, section, password, prompter, select, text, message } from "inquirer-builder";
+```javascript
+import { password, prompter, text, yesno } from "../package";
 
-// Small helper function
-function email(message: string) {
-    const emailRegex = /^[\w\-+.]+@[\w.\-]+\.[a-z]{2,}$/i;
-    return text(message).validate((email: string) => emailRegex.test(email) || "This address is not valid");
+const personalInfo = {
+    "displayName": text("Set your display name: "),
+    "email": text("Whats your email?")
 }
 
-// Login Questions
-const login = section("user", {
-    username: text("Username"),
-    password: password("Password"),
-});
-
-// Register Questions
-const register = section("user", {
-    username: text("Username"),
-    displayName: text("Displayname"),
-    email: email("Email"),
-    password: password("Password"),
-});
-
-// Menu Prompt, leads to Login or Register
-const menu = {
-    'auth-type': select("Do you have an account?", {
-        login: entry("Login").then(login),
-        register: entry("Register").then(register),
-    }),
-    '_msg': message((data: any) => `Well done ${data.user.username}, you are logged in!`)
+const register = {
+    "username": text("Username: "),
+    "password": password("Password: "),
+    "_": yesno("Do you want to setup some personal information?").then(personalInfo)
 };
 
-prompter(menu).then(answers => {
-    console.log(answers);
-});
-
+prompter(register).then(console.log);
 ```
