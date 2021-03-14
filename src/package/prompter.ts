@@ -24,10 +24,12 @@ class Watcher {
         this.promise = new Promise(resolve => self.done = resolve);
     }
 
-    addAmount(amount: number) {
-        this.amount += amount;
+    decrement(amount: number) {
+        this.amount -= amount;
+    }
+
+    async fire() {
         if (this.finished()) {
-            console.log("finished");
             this.done();
         }
     }
@@ -38,31 +40,45 @@ class Watcher {
 }
 
 export class Context {
+    public queue: SerializedQuestions = [];
+    private watchers: Watcher[] = []
+
     constructor(public local: Answers,
                 public global: Answers,
-                public queue: SerializedQuestions,
-                private watchers: Watcher[] = []) { }
+                queue: Questions) {
+        this.insert(queue);
+    }
     
     nextQuestion() {
-        this.watchers.forEach(watcher => watcher.addAmount(-1));
-        this.watchers = this.watchers.filter(watcher => watcher.finished());
-        console.log(this.watchers.map(watch => watch.amount));
+        this.watchers[0]?.decrement(1);
         return this.queue.splice(0, 1)?.[0];
+    }
+    
+    async fireWatchers() {
+        // this.watchers = this.watchers.filter(watcher => !watcher.finished());
+        let watcher: Watcher;
+        while (watcher = this.watchers[0]) {
+            await watcher.fire();
+            if (watcher.finished()) {
+                this.watchers.splice(0, 1);
+                continue;
+            }
+            break;
+        }
     }
 
     insert(questions: Questions) {
         const serialized = Questions.serialize(questions);
         this.queue.splice(0, 0, ...serialized);
-        this.watchers.forEach(watcher => watcher.addAmount(serialized.length));
         const watcher = new Watcher(serialized.length);
-        this.watchers.push(watcher);
+        this.watchers.splice(0, 0, watcher);
         return watcher.promise;
     }
 }
 
 
 export async function prompter(questions: Questions, answers: Answers = {}) {
-    return (await prompterExtended(new Context(answers, answers, Questions.serialize(questions))));
+    return (await prompterExtended(new Context(answers, answers, questions)));
 }
 
 export function removeUncaptured(answers: Answers) {
@@ -92,6 +108,8 @@ export async function prompterExtended(context: Context) {
             // catch nested prompts
             await builder.handleAnswer(answer, context);
         }
+
+        await context.fireWatchers();
     }
 
     // removing uncaptured questions (detected by underscore as prefix in name)

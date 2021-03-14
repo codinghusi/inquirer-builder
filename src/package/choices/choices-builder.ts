@@ -57,10 +57,10 @@ export abstract class ChoicesBuilder extends QuestionBuilder {
             throw "cannot add a choice to a function generating a choice array later";
         }
         (this._choices as Choice[]).push(choice);
+        return this;
     }
 
     build(answers: Answers) {
-        console.log("choices", Choices.build(this._choices, answers));
         return { 
             ...super.build(answers),
             choices: Choices.build(this._choices, answers),

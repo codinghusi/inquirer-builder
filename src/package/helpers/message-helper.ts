@@ -12,10 +12,10 @@ export class MessageHelper implements Helper {
         if (typeof(message) === "function") {
             message = message(context.local, context.global);
         }
-        await prompter([ text(message).prefix("").filter(() => "") ]);
-    }
-
-    build() {
-        return null;
+        // const builder = text(message).prefix("").filter(() => "");
+        const builder = text("lol");
+        context.global.test = JSON.stringify(builder.build(context.local));
+        console.log(context.global.test);
+        context.insert([ builder ]);
     }
 }

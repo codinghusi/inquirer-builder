@@ -42,6 +42,9 @@ export const Questions = {
         }
         
         return Object.entries(questions).map(([name, question]) => {
+            if (!question) {
+                return null;
+            }
             if (question instanceof QuestionBuilder) {
                 question.name(name);
             } else if (question instanceof Helper) {
@@ -51,7 +54,7 @@ export const Questions = {
                 question.name(name);
             }
             return question;
-        });
+        }).filter(question => !!question);
     },
 
     async serializeCallback(questions: CallbackExtended, answer: Answer, context: Context) {
