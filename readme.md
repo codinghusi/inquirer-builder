@@ -4,11 +4,11 @@ This package builds on top of Inquirer.js and provides you more flexibility and 
 On top of that it's more intuitive to use.
 
 ## Examples
-Check out the examples/ for examples
+Check out the src/examples/ for examples
 
 Example "Login or Register":
 ```
-import { entry, section, password, prompter, select, text, message } from "../builder/prompter";
+import { entry, section, password, prompter, select, text, message } from "inquirer-builder";
 
 // Small helper function
 function email(message: string) {
