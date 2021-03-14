@@ -26,7 +26,7 @@ const menu = {
         login: entry("Login").then(login),
         register: entry("Register").then(register),
     }),
-    '_msg': message((data: any) => `Well done ${data.user.username}, you are logged in!`)
+    '_': message((data: any) => `Well done ${data.user.username}, you are logged in!`)
 };
 
 prompter(menu).then(answers => {
