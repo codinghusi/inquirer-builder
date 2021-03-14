@@ -1,6 +1,6 @@
 {
   "name": "@gweiermann/inquirer-builder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Builds on top of inquirerjs for very easy use",
   "main": "dist/package/index.js",
   "types": "dist/package/index.d.ts",
