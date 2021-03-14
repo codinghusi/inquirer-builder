@@ -14,7 +14,7 @@ Check out the src/examples/ for examples
 
 Example "Login or Register":
 ```javascript
-import { password, prompter, text, yesno } from "../package";
+import { password, prompter, text, yesno } from "@gweiermann/inquirer-builder";
 
 const personalInfo = {
     "displayName": text("Set your display name: "),
